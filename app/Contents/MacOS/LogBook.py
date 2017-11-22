@@ -21,6 +21,13 @@ LIBRARY_DIR = os.path.join(os.environ['HOME'], 'Library')
 APPLICATION_SUPPORT_DIR = os.path.join(LIBRARY_DIR, 'Application Support')
 LOGBOOK_SUPPORT_DIR = os.path.join(APPLICATION_SUPPORT_DIR, BUNDLE_NAME)
 
+JAVA_CMD = subprocess.check_output([
+    '/usr/libexec/java_home',
+    '-v',
+    '1.8',
+    ], shell=False, universal_newlines=True).strip() + '/bin/java'
+
+
 # 起動ディレクトリ以下に作るサブディレクトリ
 SUB_DIRECTORIES = (
      'battlelog',
@@ -50,7 +57,7 @@ for subdir in SUB_DIRECTORIES:
 
 # アイコンを指定して起動
 subprocess.call((
-    'java',
+    JAVA_CMD,
     '-Xdock:icon={0}'.format(ICON_PATH),
     '-jar', LOGBOOK_JAR_PATH,
 ))
